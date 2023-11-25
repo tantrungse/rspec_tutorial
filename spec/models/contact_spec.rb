@@ -1,37 +1,37 @@
 require 'rails_helper'
 
 describe Contact do
-    it "has a valid factory" do
-        expect(FactoryBot.build(:contact)).to be_valid
+    it "is has a valid factory" do
+        expect(build(:contact)).to be_valid
     end
 
     it "is invalid without a firstname" do
-        contact = FactoryBot.build(:contact, firstname: nil)
+        contact = build(:contact, firstname: nil)
         contact.valid?
         expect(contact.errors[:firstname]).to include("can't be blank")
     end
 
     it "is invalid without a lastname" do
-        contact = FactoryBot.build(:contact, lastname: nil)
+        contact = build(:contact, lastname: nil)
         contact.valid?
         expect(contact.errors[:lastname]).to include("can't be blank")
     end
 
     it "is invalid without an email address" do
-        contact = FactoryBot.build(:contact, email: nil)
+        contact = build(:contact, email: nil)
         contact.valid?
         expect(contact.errors[:email]).to include("can't be blank")
     end
 
     it "is invalid with a duplicate email address" do
-        FactoryBot.create(:contact, email: 'aaron@example.com')
-        contact = FactoryBot.build(:contact, email: 'aaron@example.com')
+        create(:contact, email: 'aaron@example.com')
+        contact = build(:contact, email: 'aaron@example.com')
         contact.valid?
         expect(contact.errors[:email]).to include("has already been taken")
     end
 
     it "returns a contact's fullname as a string" do
-        contact = FactoryBot.build(
+        contact = build(
             :contact,
             firstname: 'Jane',
             lastname: 'Smith'
