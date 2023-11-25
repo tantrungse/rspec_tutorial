@@ -38,5 +38,12 @@ describe Contact do
         contact.valid?
         expect(contact.errors[:email]).to include("has already been taken")
     end
-    it "returns a contact's fullname as a string"
+    it "returns a contact's fullname as a string" do
+        contact = Contact.new(
+            firstname: 'John',
+            lastname: 'Doe',
+            email: 'johndoe@gmail.com'
+        )
+        expect(contact.name).to eq 'John Doe'
+    end
 end
