@@ -1,7 +1,7 @@
 FactoryBot.define do
     factory :phone do
         association :contact
-        phone { "123-555-1234" }
+        phone { FFaker::PhoneNumber.phone_number }
         
         factory :home_phone do
             phone_type { "home" }

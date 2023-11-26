@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Contact do
-    it "is has a valid factory" do
+    it "has a valid factory" do
         expect(build(:contact)).to be_valid
     end
 
@@ -37,6 +37,10 @@ describe Contact do
             lastname: 'Smith'
         )
         expect(contact.name).to eq 'Jane Smith'
+    end
+
+    it "has three phone numbers" do
+        expect(create(:contact).phones.count).to eq 3
     end
     
     describe "filter last name by letter" do
