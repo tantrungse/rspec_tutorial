@@ -183,7 +183,20 @@ describe ContactsController do
     end
 
     describe "DELETE #destroy" do
-        it "deletes the contact from the database"
-        it "redirects to users#index"
+        before :each do
+            @contact = create(:contact)
+        end
+
+        it "deletes the contact" do
+            expect {
+                delete :destroy,
+                params: { id: @contact }
+            }.to change(Contact, :count).by(-1)
+        end
+
+        it "redirects to contacts#index" do
+            delete :destroy, params: { id: @contact }
+            expect(response).to redirect_to contacts_url
+        end
     end
 end
