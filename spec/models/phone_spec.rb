@@ -10,6 +10,7 @@ describe Phone do
         )
         mobile_phone = build(
             :mobile_phone,
+            contact: contact,
             phone: '785-555-1234'
         )
 
