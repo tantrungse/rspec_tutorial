@@ -413,4 +413,93 @@ describe ContactsController do
             end
         end
     end
+
+    describe "guest access" do
+
+        describe "GET #index" do
+            context "with params[:letter]" do
+                it "populates an array of contacts starting with the letter" do
+                    smith = create(:contact, lastname: "Smith")
+                    jones = create(:contact, lastname: "Jones")
+                    get :index, params: { letter: "S" }
+                    expect(assigns(:contacts)).to match_array([smith])
+                end
+
+                it "renders the :index template" do
+                    get :index, params: { letter: "S" }
+                    expect(response).to render_template :index
+                end
+            end
+
+            context "without params[:letter]" do
+                it "populates an array of all contacts" do
+                    smith = create(:contact, lastname: "Smith")
+                    jones = create(:contact, lastname: "Jones")
+                    get :index
+                    expect(assigns(:contacts)).to match_array([smith, jones])
+                end
+
+                it "renders the :index template" do
+                    get :index
+                    expect(response).to render_template :index
+                end
+            end
+        end
+
+        describe "GET #show" do
+            it "assigns the requested contact to @contact" do
+                contact = create(:contact)
+                get :show, params: { id: contact.id }
+                expect(assigns(:contact)).to eq contact
+            end
+            
+            it "renders the :show template" do
+                contact = create(:contact)
+                get :show, params: { id: contact.id }
+                expect(response).to render_template :show
+            end
+        end
+
+        describe "GET #new" do
+            it "requires login" do
+                get :new
+                expect(response).to redirect_to login_url
+            end
+        end
+
+        describe "GET #edit" do
+            it "requires login" do
+                contact = create(:contact)
+                get :edit, params: { id: contact }
+                expect(response).to redirect_to login_url
+            end
+        end
+
+        describe "POST #create" do
+            it "requires login" do
+                post :create, params: {
+                    id: create(:contact),
+                    contact: attributes_for(:contact)
+                }
+                expect(response).to redirect_to login_url
+            end
+        end
+
+        describe "PUT #update" do
+            it "requires login" do
+                put :update, params: {
+                    id: create(:contact),
+                    contact: attributes_for(:contact)
+                }
+                expect(response).to redirect_to login_url
+            end
+        end
+
+        describe "DELETE #destroy" do
+            it "requires login" do
+                delete :destroy, params: { id: create(:contact) }
+                expect(response).to redirect_to login_url
+            end
+        end
+    end
 end
