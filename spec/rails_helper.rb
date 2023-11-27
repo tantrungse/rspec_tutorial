@@ -30,6 +30,9 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
 RSpec.configure do |config|
   # Include Factory Bot syntax to simplify calls to factories
   config.include FactoryBot::Syntax::Methods
@@ -61,4 +64,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include LoginMacros
 end
