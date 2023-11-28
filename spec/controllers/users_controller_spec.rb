@@ -5,7 +5,7 @@ describe UsersController do
     describe "user access" do
         before :each do
             @user = create(:user)
-            session[:user_id] = @user.id
+            set_user_session @user
         end
 
         describe "GET #index" do
